@@ -2,8 +2,6 @@
 
 Features:
 
-Create a pet with cutomization
-
 UI that displays pet and stats
 
 Feed it (use maps to get food?)
@@ -15,3 +13,13 @@ play games with it (minigames?)
 play music to make it happy
 
 Store pet stats locally on phone
+
+Moods
+
+    Sleepy (tied to curfew)
+    
+    Hungry (need to collect food)
+    
+    Bored (wants to go into nature/near water)
+    
+    Playful (minigame)
