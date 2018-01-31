@@ -23,3 +23,7 @@ Moods
     Bored (want to go for a walk)
     
     Playful (minigame)
+    
+    Sad (play music)
+    
+    Creative (draw for buddy)
