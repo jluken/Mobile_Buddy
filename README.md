@@ -20,6 +20,6 @@ Moods
     
     Hungry (need to collect food)
     
-    Bored (wants to go into nature/near water)
+    Bored (want to go for a walk)
     
     Playful (minigame)
