@@ -26,4 +26,4 @@ Moods
     
     Sad (play music)
     
-    Creative (draw for buddy)
+    Lonely (draw for buddy)
