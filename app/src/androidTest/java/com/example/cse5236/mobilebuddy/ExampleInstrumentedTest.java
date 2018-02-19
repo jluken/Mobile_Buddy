@@ -24,3 +24,4 @@ public class ExampleInstrumentedTest {
         assertEquals("com.example.cse5236.mobilebuddy", appContext.getPackageName());
     }
 }
+// Test comment
