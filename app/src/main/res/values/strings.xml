@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Mobile Buddy</string>
+    <string name="title_activity_play_game">PlayGame</string>
+    <string name="title_activity_collect_food">CollectFood</string>
+    <string name="title_activity_draw">Draw</string>
+    <string name="title_activity_go_for_walk">GoForWalk</string>
+    <string name="title_activity_music">Music</string>
+    <string name="title_activity_sleep">Sleep</string>
 </resources>

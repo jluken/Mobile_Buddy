@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".HomeScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,12 +16,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".InteractScreenActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PlayGame"
+            android:label="@string/title_activity_play_game"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CollectFood"
+            android:label="@string/title_activity_collect_food"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Draw"
+            android:label="@string/title_activity_draw"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GoForWalk"
+            android:label="@string/title_activity_go_for_walk"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Music"
+            android:label="@string/title_activity_music"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Sleep"
+            android:label="@string/title_activity_sleep"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
