@@ -3,6 +3,7 @@ package com.example.cse5236.mobilebuddy;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 
@@ -15,6 +16,9 @@ public class InteractScreenActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Log.d("Checkpoint3", "InteractScreenActivity: On Create Triggered");
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interact_screen_activity);
 
@@ -65,5 +69,19 @@ public class InteractScreenActivity extends Activity{
                 startActivity(sleepIntent);
             }
         });
+    }
+
+    @Override
+    protected void onStop()
+    {
+        Log.d("Checkpoint3", "InteractScreenActivity: On Stop Triggered");
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d("Checkpoint3", "InteractScreenActivity: On Start Triggered");
+        super.onStart();
+
     }
 }
