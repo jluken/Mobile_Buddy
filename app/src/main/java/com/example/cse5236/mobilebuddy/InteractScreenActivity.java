@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 /**
  * Created by Amir on 2/23/2018.
@@ -19,6 +20,9 @@ public class InteractScreenActivity extends FragmentActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Log.d("Checkpoint3", "InteractScreenActivity: On Create Triggered");
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interact_screen_activity);
 
@@ -59,5 +63,19 @@ public class InteractScreenActivity extends FragmentActivity{
             transaction.replace(R.id.interact_container, horiFrag).commit();
         else
             transaction.replace(R.id.interact_container, vertFrag).commit();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        Log.d("Checkpoint3", "InteractScreenActivity: On Stop Triggered");
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d("Checkpoint3", "InteractScreenActivity: On Start Triggered");
+        super.onStart();
+
     }
 }
