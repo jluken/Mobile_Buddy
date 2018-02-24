@@ -13,12 +13,12 @@ import android.content.Intent;
  * Created by Amir on 2/23/2018.
  */
 
-public class InteractScreenVerticalFragment extends Fragment {
+public class InteractScreenHorizontalFragment extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.interact_vertical_layout, container, false);
+        View view = inflater.inflate(R.layout.interact_horizontal_layout, container, false);
 
         return view;
     }
