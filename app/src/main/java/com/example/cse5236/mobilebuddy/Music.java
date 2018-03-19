@@ -17,7 +17,6 @@ public class Music extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ActivityCompat.requestPermissions(Music.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -27,11 +27,11 @@ import java.util.ArrayList;
 
 public class MusicPlayerFragment extends Fragment{
 
-    private boolean paused = false, playbackPaused = false, musicBound = false;
     private MediaPlayer mediaPlayer;
     private Uri musicUri;
     private ArrayList<SongInfoObj> songList;
     private SongListAdapter slAdapter;
+    private int currentPos;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,12 +49,6 @@ public class MusicPlayerFragment extends Fragment{
         slAdapter = new SongListAdapter(getActivity(), songList);
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        try {
-            mediaPlayer.setDataSource(getActivity(), musicUri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
 
         final ListView songView = getView().findViewById(R.id.song_list);
         songView.setAdapter(slAdapter);
@@ -62,36 +56,37 @@ public class MusicPlayerFragment extends Fragment{
         songView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.v("Module Item Trigger", "Module item was triggered");
-                musicUri = ContentUris.withAppendedId(
-                        android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, songList.get(position).getID());
-                try {
-                    mediaPlayer.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                mediaPlayer.start();
+                currentPos = position;
+                playSong();
             }
         });
 
         final Button playButton = getView().findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.v("Module Item Trigger", "Module item was triggered");
+                if (!mediaPlayer.isPlaying()){
+                    mediaPlayer.start();
+                }
             }
         });
 
         final Button pauseButton = getView().findViewById(R.id.pauseButton);
         pauseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                if (mediaPlayer.isPlaying()){
+                    mediaPlayer.pause();
+                }
             }
         });
 
         final Button skipButton = getView().findViewById(R.id.skipButton);
         skipButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                if (currentPos == songList.size() - 1)
+                    currentPos = 0;
+                else
+                    currentPos += 1;
+                playSong();
             }
         });
     }
@@ -120,5 +115,22 @@ public class MusicPlayerFragment extends Fragment{
         }
 
         cursor.close();
+    }
+
+    public void playSong(){
+        mediaPlayer.reset();
+        musicUri = ContentUris.withAppendedId(
+                android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, songList.get(currentPos).getID());
+        try {
+            mediaPlayer.setDataSource(getActivity(), musicUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mediaPlayer.start();
     }
 }

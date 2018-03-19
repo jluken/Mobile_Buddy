@@ -1,5 +1,8 @@
 package com.example.cse5236.mobilebuddy;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +18,7 @@ import android.content.Intent;
 
 public class InteractScreenHorizontalFragment extends Fragment {
 
+    private Bundle bundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,7 +29,8 @@ public class InteractScreenHorizontalFragment extends Fragment {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
 
-        final Bundle bundle = this.getArguments();
+        bundle = this.getArguments();
+        final String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
 
         final Button playGameButton = getView().findViewById(R.id.playGameButton);
         playGameButton.setOnClickListener(new View.OnClickListener() {
@@ -37,7 +42,11 @@ public class InteractScreenHorizontalFragment extends Fragment {
         final Button playMusicButton = getView().findViewById(R.id.playMusicButton);
         playMusicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity((Intent)bundle.getParcelable("music"));
+                if (getContext().checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_DENIED)
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, 1);
+                else
+                    startActivity((Intent) bundle.getParcelable("music"));
+
             }
         });
 
@@ -68,5 +77,15 @@ public class InteractScreenHorizontalFragment extends Fragment {
                 startActivity((Intent)bundle.getParcelable("sleep"));
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    startActivity((Intent) bundle.getParcelable("music"));
+            }
+        }
     }
 }

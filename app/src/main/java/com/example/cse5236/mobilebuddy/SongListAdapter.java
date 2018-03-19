@@ -1,6 +1,5 @@
 package com.example.cse5236.mobilebuddy;
 
-import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -34,19 +33,28 @@ class SongListAdapter extends ArrayAdapter<SongInfoObj> {
 
     @Override
     public View getView(int position, View view, ViewGroup container) {
+
+        ViewHolder holder;
+
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.song_list_item, container, false);
 
-            TextView songTitle = view.findViewById(R.id.firstLine);
-            TextView artistName = view.findViewById(R.id.secondLine);
-            ImageView albumCover = view.findViewById(R.id.albumCover);
+            holder = new ViewHolder();
 
-            songTitle.setText(songList[position].getTitle());
-            artistName.setText(songList[position].getArtist());
+            holder.songTitle = view.findViewById(R.id.firstLine);
+            holder.artistName = view.findViewById(R.id.secondLine);
+            holder.albumCover = view.findViewById(R.id.albumCover);
+
+            view.setTag(holder);
+
             // set album cover?
-        }
+        } else
+            holder = (ViewHolder) view.getTag();
+
+        holder.songTitle.setText(songList[position].getTitle());
+        holder.artistName.setText(songList[position].getArtist());
 
         return view;
     }
@@ -59,5 +67,10 @@ class SongListAdapter extends ArrayAdapter<SongInfoObj> {
     @Override
     public boolean isEmpty() {
         return false;
+    }
+
+    static class ViewHolder{
+        public TextView songTitle, artistName;
+        public ImageView albumCover;
     }
 }
