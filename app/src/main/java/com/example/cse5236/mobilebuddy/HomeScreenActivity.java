@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.view.View;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 import java.util.logging.Logger;
 
@@ -13,12 +16,16 @@ import java.util.logging.Logger;
  * Created by krishnaganesan on 2/22/18.
  */
 
-public class HomeScreenActivity extends AppCompatActivity {
+public class HomeScreenActivity extends AppCompatActivity{
+
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Log.wtf("buddy", "onCreate");
         Log.d("Checkpoint3", "HomeScreenActivity: On Create Triggered");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen_activity);
@@ -30,6 +37,13 @@ public class HomeScreenActivity extends AppCompatActivity {
                 startActivity(beginIntent);
             }
         });
+
+        BuddyDisplayFragment buddyFragment = new BuddyDisplayFragment();
+        fragmentTransaction.add(R.id.pet_container, buddyFragment);
+        //fragmentTransaction.commit();
+        GraphFragment graphFragment = new GraphFragment();
+        fragmentTransaction.add(R.id.graph_container, graphFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
