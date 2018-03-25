@@ -20,14 +20,39 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_go_for_walk" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <android.support.v7.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dip">>
+
+    <TextView
+        android:id="@+id/tv_steps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        />
+
+
+    <Button
+        android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_gravity="center"
+        android:text="Start Pedometer"
+        />
 
-</android.support.design.widget.CoordinatorLayout>
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Stop Pedometer"
+
+    />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+    </android.support.design.widget.CoordinatorLayout>
