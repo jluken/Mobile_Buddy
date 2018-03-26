@@ -44,7 +44,7 @@ public class HomeScreenActivity extends AppCompatActivity{
             }
         });
 
-        BuddyDisplayFragment buddyFragment = new BuddyDisplayFragment();
+        final BuddyDisplayFragment buddyFragment = new BuddyDisplayFragment();
         fragmentTransaction.add(R.id.pet_container, buddyFragment);
         //fragmentTransaction.commit();
         final GraphFragment graphFragment = new GraphFragment();
@@ -74,6 +74,7 @@ public class HomeScreenActivity extends AppCompatActivity{
                 setStat(active,"loneliness", loneliness + 1);
 
                 graphFragment.updateGraph();
+                buddyFragment.updateBuddy();
 
                 handler.postDelayed(this, delay);
             }
