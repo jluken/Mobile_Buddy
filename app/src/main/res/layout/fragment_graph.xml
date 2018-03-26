@@ -5,35 +5,39 @@
     tools:context="com.example.cse5236.mobilebuddy.GraphFragment"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textHunger"
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:id="@+id/barchart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hunger: " />
-    <TextView
-        android:id="@+id/textSleepy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sleepiness: " />
-    <TextView
-        android:id="@+id/textBored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Boredom: " />
-    <TextView
-        android:id="@+id/textPlayful"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Playfulness: " />
-    <TextView
-        android:id="@+id/textSad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sadness: " />
-    <TextView
-        android:id="@+id/textLonely"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Loneliness: " />
+        android:layout_height="match_parent"/>
+    <!--<TextView-->
+        <!--android:id="@+id/textHunger"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hunger: " />-->
+    <!--<TextView-->
+        <!--android:id="@+id/textSleepy"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Sleepiness: " />-->
+    <!--<TextView-->
+        <!--android:id="@+id/textBored"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Boredom: " />-->
+    <!--<TextView-->
+        <!--android:id="@+id/textPlayful"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Playfulness: " />-->
+    <!--<TextView-->
+        <!--android:id="@+id/textSad"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Sadness: " />-->
+    <!--<TextView-->
+        <!--android:id="@+id/textLonely"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Loneliness: " />-->
 
 </LinearLayout>

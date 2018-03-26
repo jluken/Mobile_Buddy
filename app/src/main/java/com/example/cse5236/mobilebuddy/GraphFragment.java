@@ -1,5 +1,6 @@
 package com.example.cse5236.mobilebuddy;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,13 +9,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Scanner;
-import android.widget.TextView;
 import java.util.*;
+
+import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 
 
 /**
@@ -54,6 +59,7 @@ public class GraphFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.e("test: ","mobilebuddy onCreate");
@@ -70,15 +76,9 @@ public class GraphFragment extends Fragment {
     }
 
     @Override
-    public void onStart(){
-        super.onStart();
-        hunger = updateStat("hunger");
-        sleepiness = updateStat("sleepiness");
-        boredom = updateStat("boredom");
-        playfulness = updateStat("playfulness");
-        sadness = updateStat("sadness");
-        loneliness = updateStat("loneliness");
-
+    public void onResume(){
+        super.onResume();
+        updateGraph();
     }
 
 //    // TODO: Rename method, update argument and hook method into UI event
@@ -104,56 +104,49 @@ public class GraphFragment extends Fragment {
 //        super.onDetach();
 //        mListener = null;
 //    }
+//    public static void updateGraph(){
+//        updateGraphData();
+//    }
 
-    private int updateStat(String stat){
-        String filename = stat + ".dat";
-        int statVal = 0;
-        try{
-            Log.e("file: ","mobilebuddy "+filename);
-            FileInputStream in = getActivity().openFileInput(filename);
-            Scanner scanner = new Scanner(in);
-            String data = scanner.nextLine();
-            Log.e("data: ","mobilebuddy " + data);
-            statVal = Integer.parseInt(data);
-            in.close();
-            scanner.close();
-        }
-        catch(java.io.FileNotFoundException	e){
-            statVal = 0;
-            FileOutputStream outputStream;
-            try {
-                outputStream = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
-                outputStream.write(Integer.toString(statVal).getBytes());
-                outputStream.close();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+    public void updateGraph(){
+        HorizontalBarChart barChart = (HorizontalBarChart) getView().findViewById(R.id.barchart);
+        ArrayList<String> emotions = new ArrayList<String>();
+        emotions.add("Hunger");
+        emotions.add("Sleepiness");
+        emotions.add("Boredom");
+        emotions.add("Playfulness");
+        emotions.add("Sadness");
+        emotions.add("Loneliness");
 
-        }
-        catch (java.io.IOException e){
-            e.printStackTrace();
-        }
+        Activity active = getActivity();
+        hunger = HomeScreenActivity.getStat(active, "hunger");
+        sleepiness = HomeScreenActivity.getStat(active,"sleepiness");
+        boredom = HomeScreenActivity.getStat(active,"boredom");
+        playfulness = HomeScreenActivity.getStat(active,"playfulness");
+        sadness = HomeScreenActivity.getStat(active,"sadness");
+        loneliness = HomeScreenActivity.getStat(active,"loneliness");
 
-        Map<String, Integer> idMap = new HashMap<String, Integer>()
-        {
-            {
-                put("hunger", R.id.textHunger);
-                put("sleepiness", R.id.textSleepy);
-                put("boredom", R.id.textBored);
-                put("playfulness", R.id.textPlayful);
-                put("sadness", R.id.textSad);
-                put("loneliness", R.id.textLonely);
-            }
-        };
-        Log.e("stat: ","mobilebuddy "+stat);
-        Log.e("id: ","mobilebuddy "+idMap.get(stat));
-        Log.e("view", "mobilebuddy "+ getView());
-        TextView statDisplay = (TextView)getView().findViewById(idMap.get(stat));
-        Log.e("textview: ","mobilebuddy "+statDisplay);
-        statDisplay.setText(stat+": "+statVal);
 
-        return statVal;
+        Log.e("loneliness: ","mobilebuddy "+loneliness);
+        List<BarEntry> emotionStats = new ArrayList<BarEntry>();
+        emotionStats.add(new BarEntry(hunger, 0));
+        emotionStats.add(new BarEntry(sleepiness, 1));
+        emotionStats.add(new BarEntry(boredom, 2));
+        emotionStats.add(new BarEntry(playfulness, 3));
+        emotionStats.add(new BarEntry(sadness, 4));
+        emotionStats.add(new BarEntry(loneliness, 5));
+
+        BarDataSet bardataset = new BarDataSet(emotionStats, "");
+        BarData data = new BarData(emotions, bardataset);
+        barChart.setData(data);
+        barChart.setDescription("");
+        YAxis yRight = barChart.getAxisRight();
+        yRight.setAxisMaxValue(100);
+        YAxis yLeft = barChart.getAxisLeft();
+        yLeft.setAxisMaxValue(100);
+
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
