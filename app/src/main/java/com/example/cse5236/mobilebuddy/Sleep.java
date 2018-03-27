@@ -25,13 +25,13 @@ import java.util.Timer;
 public class Sleep extends AppCompatActivity {
 
     boolean isSleeping;
+
     TextView currentCurfewDisplay;
     Button setNewCurfew;
     Button startSleeping;
     TimePicker curfewSetter;
     Time curfew;
     Date sleepStarted;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,25 @@ public class Sleep extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
         isSleeping = false;
         currentCurfewDisplay = findViewById(R.id.currentCurfewDisplay);
+
+        if (savedInstanceState != null)
+        {
+            curfew = new Time(savedInstanceState.getLong("CURFEW"));
+        }
+
+        if (curfew != null)
+        {
+            currentCurfewDisplay.setText("Current Curfew:" + curfew.toString());
+
+        }
+        else
+        {
+            currentCurfewDisplay.setText("No current curfew set!");
+        }
 
 
         curfewSetter = findViewById(R.id.curfewSetter);
@@ -75,15 +92,18 @@ public class Sleep extends AppCompatActivity {
             public void onClick(View v) {
                 final int status =(Integer) v.getTag();
                 if(status == 1) {
-                    startSleeping.setEnabled(false);
                     curfewSetter.setEnabled(true);
+                    startSleeping.setEnabled(false);
                     setNewCurfew.setText("Confirm Curfew");
                     v.setTag(0); //pause
                 } else {
                     startSleeping.setEnabled(true);
+
+
                     curfew = new Time(curfewSetter.getCurrentHour(), curfewSetter.getCurrentMinute(), 0);
                     setNewCurfew.setText("Set new curfew");
                     curfewSetter.setEnabled(false);
+                    setNewCurfew.setEnabled(false);
 
                     currentCurfewDisplay.setText("Current Curfew:" + curfew.toString());
                     v.setTag(1); //pause
@@ -117,6 +137,7 @@ public class Sleep extends AppCompatActivity {
         alert.show();
     }
 
+
     private void  MakeAlertFailedSleepAttempt()
     {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
@@ -139,7 +160,7 @@ public class Sleep extends AppCompatActivity {
     private void  MakeAlertRestartingFromSleep(int hours, int minutes)
     {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setMessage("Welcome back! Your pet slept for " + hours +  " hours and "+ minutes + " minutes!");
+        builder1.setMessage("Welcome back! Your pet slept for " + hours +  " hours and "+ minutes + " minutes! You can change your curfew for tomorrow if you want!");
         builder1.setCancelable(true);
 
         builder1.setNeutralButton(
@@ -216,6 +237,7 @@ public class Sleep extends AppCompatActivity {
      {
          super.onStop();
 
+
          if (isSleeping && IsScreenOn() == false)
          {
              sleepStarted = Calendar.getInstance().getTime();
@@ -235,13 +257,31 @@ public class Sleep extends AppCompatActivity {
 
         if (isSleeping)
         {
+            //Allow user to change curfew now if they want
+            setNewCurfew.setEnabled(true);
+
             int[] hoursAndMinutes = CalculateTimeDifference(sleepStarted);
             MakeAlertRestartingFromSleep(hoursAndMinutes[0], hoursAndMinutes[1]);
 
             //Add this count to the stats
+            int currentSleepStat = HomeScreenActivity.getStat(this, "sleepiness" );
+            HomeScreenActivity.setStat(this, "sleepiness", currentSleepStat + 5);
+
+            isSleeping = false;
         }
 
      }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+        // Save the user's current game state
+        savedInstanceState.putLong("CURFEW", curfew.getTime());
+        savedInstanceState.putString("KEY", "Test");
+    }
 
 
 }

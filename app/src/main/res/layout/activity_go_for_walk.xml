@@ -21,17 +21,18 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <android.support.v7.widget.LinearLayoutCompat
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dip">>
+        android:layout_marginTop="150dip">>
 
     <TextView
         android:id="@+id/tv_steps"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+
         />
 
 
@@ -40,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Start Pedometer"
+        android:text="Start My Walk!"
         />
 
     <Button
@@ -48,11 +49,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Stop Pedometer"
+        android:text="Stop My Walk!"
 
     />
 
-    </android.support.v7.widget.LinearLayoutCompat>
+    </LinearLayout>
 
 
     </android.support.design.widget.CoordinatorLayout>
