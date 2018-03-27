@@ -31,7 +31,7 @@ public class InteractScreenActivity extends FragmentActivity{
 
         Intent gameIntent = new Intent(this, PlayGame.class);
         Intent musicIntent = new Intent(this, Music.class);
-        Intent foodIntent = new Intent(this, CollectFood.class);
+        //Intent foodIntent = new Intent(this, CollectFood.class);
         Intent drawIntent = new Intent(this, Draw.class);
         Intent walkIntent = new Intent(this, GoForWalk.class);
         Intent sleepIntent = new Intent(this, Sleep.class);
@@ -39,7 +39,7 @@ public class InteractScreenActivity extends FragmentActivity{
         Bundle bundle = new Bundle();
         bundle.putParcelable("game", gameIntent);
         bundle.putParcelable("music", musicIntent);
-        bundle.putParcelable("food", foodIntent);
+        //bundle.putParcelable("food", foodIntent);
         bundle.putParcelable("draw", drawIntent);
         bundle.putParcelable("walk", walkIntent);
         bundle.putParcelable("sleep", sleepIntent);
