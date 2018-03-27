@@ -86,6 +86,8 @@ public class GoForWalk extends AppCompatActivity implements SensorEventListener,
 
                 //Reset steps for walk
                 numSteps = 0;
+                TvSteps.setText("Steps taken: " + numSteps);
+
             }
         });
     }
