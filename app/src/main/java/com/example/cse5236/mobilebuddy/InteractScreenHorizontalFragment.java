@@ -50,12 +50,12 @@ public class InteractScreenHorizontalFragment extends Fragment {
             }
         });
 
-        final Button collectFoodButton = getView().findViewById(R.id.collectFoodButton);
-        collectFoodButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity((Intent)bundle.getParcelable("food"));
-            }
-        });
+//        final Button collectFoodButton = getView().findViewById(R.id.collectFoodButton);
+//        collectFoodButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                startActivity((Intent)bundle.getParcelable("food"));
+//            }
+//        });
 
         final Button drawButton = getView().findViewById(R.id.drawButton);
         drawButton.setOnClickListener(new View.OnClickListener() {

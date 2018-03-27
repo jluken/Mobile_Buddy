@@ -111,7 +111,7 @@ public class GraphFragment extends Fragment {
     public void updateGraph(){
         HorizontalBarChart barChart = (HorizontalBarChart) getView().findViewById(R.id.barchart);
         ArrayList<String> emotions = new ArrayList<String>();
-        emotions.add("Hunger");
+        //emotions.add("Hunger");
         emotions.add("Sleepiness");
         emotions.add("Boredom");
         emotions.add("Playfulness");
@@ -119,7 +119,7 @@ public class GraphFragment extends Fragment {
         emotions.add("Loneliness");
 
         Activity active = getActivity();
-        hunger = HomeScreenActivity.getStat(active, "hunger");
+        //hunger = HomeScreenActivity.getStat(active, "hunger");
         sleepiness = HomeScreenActivity.getStat(active,"sleepiness");
         boredom = HomeScreenActivity.getStat(active,"boredom");
         playfulness = HomeScreenActivity.getStat(active,"playfulness");
@@ -127,14 +127,13 @@ public class GraphFragment extends Fragment {
         loneliness = HomeScreenActivity.getStat(active,"loneliness");
 
 
-        Log.e("loneliness: ","mobilebuddy "+loneliness);
         List<BarEntry> emotionStats = new ArrayList<BarEntry>();
-        emotionStats.add(new BarEntry(hunger, 0));
-        emotionStats.add(new BarEntry(sleepiness, 1));
-        emotionStats.add(new BarEntry(boredom, 2));
-        emotionStats.add(new BarEntry(playfulness, 3));
-        emotionStats.add(new BarEntry(sadness, 4));
-        emotionStats.add(new BarEntry(loneliness, 5));
+        //emotionStats.add(new BarEntry(hunger, 0));
+        emotionStats.add(new BarEntry(sleepiness, 0));
+        emotionStats.add(new BarEntry(boredom, 1));
+        emotionStats.add(new BarEntry(playfulness, 2));
+        emotionStats.add(new BarEntry(sadness, 3));
+        emotionStats.add(new BarEntry(loneliness, 4));
 
         BarDataSet bardataset = new BarDataSet(emotionStats, "");
         BarData data = new BarData(emotions, bardataset);
