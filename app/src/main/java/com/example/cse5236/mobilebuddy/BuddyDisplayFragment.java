@@ -1,5 +1,6 @@
 package com.example.cse5236.mobilebuddy;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -55,9 +56,55 @@ public class BuddyDisplayFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
+
+        updateBuddy();
+
+
+    }
+
+    public void updateBuddy(){
         ImageView mImageView;
         mImageView = (ImageView) (ImageView)getView().findViewById(R.id.buddyImage);
-        mImageView.setImageResource(R.drawable.buddybase);
+        Activity active = getActivity();
+        int hunger = HomeScreenActivity.getStat(active, "hunger");
+        int sleepiness = HomeScreenActivity.getStat(active,"sleepiness");
+        int boredom = HomeScreenActivity.getStat(active,"boredom");
+        int playfulness = HomeScreenActivity.getStat(active,"playfulness");
+        int sadness = HomeScreenActivity.getStat(active,"sadness");
+        int loneliness = HomeScreenActivity.getStat(active,"loneliness");
+
+        int[] emotions = {hunger, sleepiness, boredom, playfulness, sadness, loneliness};
+        int worstEmotion = -1;
+        int biggest = 0;
+        for (int i = 0; i < emotions.length; i++){
+            if (emotions[i] > biggest){
+                biggest = emotions[i];
+                worstEmotion = i;
+            }
+        }
+        if (biggest > 80){
+            if(worstEmotion == 1){
+                mImageView.setImageResource(R.drawable.buddysleepy);
+            }
+            else if(worstEmotion == 2){
+                mImageView.setImageResource(R.drawable.buddybored);
+            }
+            else if(worstEmotion == 3){
+                mImageView.setImageResource(R.drawable.buddyplayful);
+            }
+            else if(worstEmotion == 4){
+                mImageView.setImageResource(R.drawable.buddysad);
+            }
+            else if(worstEmotion == 5){
+                mImageView.setImageResource(R.drawable.buddylonely);
+            }
+            else {
+                mImageView.setImageResource(R.drawable.buddybase);
+            }
+        }
+        else {
+            mImageView.setImageResource(R.drawable.buddybase);
+        }
 
     }
 
