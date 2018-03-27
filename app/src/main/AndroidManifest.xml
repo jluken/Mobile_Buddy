@@ -3,6 +3,14 @@
     package="com.example.cse5236.mobilebuddy">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <permission
+        android:name="com.example.cse5236.mobilebuddy.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.example.cse5236.mobilebuddy.permission.MAPS_RECEIVE"/>
+
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -31,6 +39,8 @@
             android:name=".CollectFood"
             android:label="@string/title_activity_collect_food"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity
             android:name=".Draw"
             android:label="@string/title_activity_draw"
@@ -47,7 +57,13 @@
             android:name=".Sleep"
             android:label="@string/title_activity_sleep"
             android:theme="@style/AppTheme.NoActionBar" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="GOOGLE_MAPS_API_KEY" />
 
     </application>
 

@@ -59,14 +59,14 @@ public class HomeScreenActivity extends AppCompatActivity{
         handler.postDelayed(new Runnable(){
             public void run(){
                 //do something
-                //int hunger = getStat(active,"hunger");
+                int hunger = getStat(active,"hunger");
                 int sleepiness = getStat(active,"sleepiness");
                 int boredom = getStat(active,"boredom");
                 int playfulness = getStat(active,"playfulness");
                 int sadness = getStat(active,"sadness");
                 int loneliness = getStat(active,"loneliness");
 
-                //setStat(active,"hunger", hunger +1);
+                setStat(active,"hunger", hunger +1);
                 setStat(active,"sleepiness", sleepiness + 1);
                 setStat(active,"boredom", boredom + 1);
                 setStat(active,"playfulness", playfulness + 1);
