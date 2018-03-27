@@ -8,10 +8,6 @@
     android:id="@+id/frameMain"
     tools:context="com.example.cse5236.mobilebuddy.PlayGame">
 
-    <RelativeLayout
-        android:id="@+id/relLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></RelativeLayout>
 
     <ImageView
         android:id="@+id/background"
@@ -19,6 +15,52 @@
         android:scaleType = "centerCrop"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"/>
+
+    <ImageView
+        android:id="@+id/leftButton"
+        android:src="@drawable/leftarrow"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:alpha="0.75"
+        android:layout_gravity="start|center"/>
+
+    <ImageView
+        android:id="@+id/rightButton"
+        android:src="@drawable/rightarrow"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:alpha="0.75"
+        android:layout_gravity="end|center"/>
+
+    <RelativeLayout
+        android:id="@+id/relLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/buddy"
+            android:src="@drawable/buddysprite"
+            android:layout_height="64dp"
+            android:layout_width="64dp"/>
+
+        <ImageView
+            android:id="@+id/battery1"
+            android:src="@drawable/battery"
+            android:layout_height="32dp"
+            android:layout_width="32dp"/>
+
+        <ImageView
+            android:id="@+id/battery2"
+            android:src="@drawable/battery"
+            android:layout_height="32dp"
+            android:layout_width="32dp"/>
+
+        <ImageView
+            android:id="@+id/battery3"
+            android:src="@drawable/battery"
+            android:layout_height="32dp"
+            android:layout_width="32dp"/>
+    </RelativeLayout>
 
     <TextView
         android:text="Score: "

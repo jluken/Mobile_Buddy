@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -13,10 +13,10 @@ import java.util.Random;
 
 import android.content.res.Resources;
 
-public class PlayGame extends AppCompatActivity implements View.OnTouchListener {
+public class PlayGame extends AppCompatActivity {
 
     public int score = 0;
-    private ImageView buddy, battery1, battery2, battery3;
+    private ImageView buddy, battery1, battery2, battery3, leftButton, rightButton;
     private TextView scoreText;
     private ArrayList<ImageView> batteryList = new ArrayList<ImageView>();
 
@@ -25,33 +25,33 @@ public class PlayGame extends AppCompatActivity implements View.OnTouchListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
 
-        FrameLayout layout = findViewById(R.id.frameMain);
+        leftButton = findViewById(R.id.leftButton);
+        rightButton = findViewById(R.id.rightButton);
+        leftButton.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event){
+                if (buddy.getX() > 0)
+                    buddy.setX(buddy.getX() - 5);
+                return true;
+            }
+        });
 
-        buddy = new ImageView(this);
-        buddy.setImageResource(R.drawable.buddysprite);
-        buddy.setMaxHeight(4);
-        buddy.setMaxWidth(4);
+        rightButton.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event){
+                if (buddy.getX() < getScreenWidth())
+                    buddy.setX(buddy.getX() + 5);
+                return true;
+            }
+        });
+
+        buddy = findViewById(R.id.buddy);
         buddy.setX(getScreenWidth() / 2);
-        buddy.setY(10);
-        layout.addView(buddy);
+        buddy.setY(getScreenHeight() - getScreenHeight() / 3.5f);
 
-        battery1 = new ImageView(this);
-        battery1.setImageResource(R.drawable.battery);
-        battery1.setMaxWidth(4);
-        battery1.setMaxHeight(4);
-        layout.addView(battery1);
-
-        battery2 = new ImageView(this);
-        battery2.setImageResource(R.drawable.battery);
-        battery2.setMaxWidth(4);
-        battery2.setMaxHeight(4);
-        layout.addView(battery2);
-
-        battery3 = new ImageView(this);
-        battery3.setImageResource(R.drawable.battery);
-        battery3.setMaxWidth(4);
-        battery3.setMaxHeight(4);
-        layout.addView(battery3);
+        battery1 = findViewById(R.id.battery1);
+        battery2 = findViewById(R.id.battery2);
+        battery3 = findViewById(R.id.battery3);
 
         batteryList.add(battery1);
         batteryList.add(battery2);
@@ -67,7 +67,7 @@ public class PlayGame extends AppCompatActivity implements View.OnTouchListener 
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(1000);
+                        Thread.sleep(10);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -76,25 +76,16 @@ public class PlayGame extends AppCompatActivity implements View.OnTouchListener 
                         });
                     }
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         };
-    }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent event){
-        final int x = (int) event.getRawX();
-
-        if (x < getScreenWidth() / 2){
-            buddy.setX(buddy.getX() - 1);
-        } else if (x > getScreenWidth() / 2){
-            buddy.setX(buddy.getX() + 1);
-        }
-
-        return true;
+        t.start();
     }
 
     public void Update(){
+        ApplyGravity();
         CheckCollisions();
 
         scoreText.setText("Score: " + score);
@@ -110,13 +101,16 @@ public class PlayGame extends AppCompatActivity implements View.OnTouchListener 
             Rect batRect = new Rect(k[0], k[1], k[0] + batteryList.get(i).getWidth(), k[1] + batteryList.get(i).getHeight());
             if (buddyRect.intersect(batRect)){
                 score += 100;
+                Respawn(batteryList.get(i));
             }
+            if (batteryList.get(i).getY() > getScreenHeight())
+                Respawn(batteryList.get(i));
         }
     }
 
     public void ApplyGravity(){
         for (int i = 0; i < batteryList.size(); i++){
-            batteryList.get(i).setY(batteryList.get(i).getY() - 1);
+            batteryList.get(i).setY(batteryList.get(i).getY() + 3);
         }
     }
 
@@ -129,8 +123,14 @@ public class PlayGame extends AppCompatActivity implements View.OnTouchListener 
     }
 
     public void Respawn(ImageView battery){
-        battery.setY(10);
+        battery.setY(0);
         battery.setX(new Random().nextInt(getScreenWidth()));
     }
 
+    private void setDimensions(View view, int width, int height){
+        android.view.ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.width = width;
+        params.height = height;
+        view.setLayoutParams(params);
+    }
 }
