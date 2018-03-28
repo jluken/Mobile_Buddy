@@ -54,7 +54,8 @@ public class HomeScreenActivity extends AppCompatActivity{
         int minute = 30;
         //increase stats every minute minutes
         final Handler handler = new Handler();
-        final int delay = 1000*60*minute; //milliseconds
+        //final int delay = 1000*60*minute; //milliseconds
+        final int delay = 1000*10; //10 second update for demo
         final Activity active = this;
         handler.postDelayed(new Runnable(){
             public void run(){
