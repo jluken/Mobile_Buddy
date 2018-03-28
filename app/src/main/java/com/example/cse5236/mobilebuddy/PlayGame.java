@@ -1,5 +1,6 @@
 package com.example.cse5236.mobilebuddy;
 
+import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -108,6 +109,9 @@ public class PlayGame extends AppCompatActivity {
             if (buddyRect.intersect(batRect)){
                 score += 100;
                 Respawn(batteryList.get(i));
+                Activity active = this;
+                int currentPlayfulnessStat = HomeScreenActivity.getStat(active, "playfulness" );
+                HomeScreenActivity.setStat(active, "playfulness", currentPlayfulnessStat - 5);
             }
             if (batteryList.get(i).getY() > getScreenHeight())
                 Respawn(batteryList.get(i));

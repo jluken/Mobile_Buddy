@@ -1,5 +1,6 @@
 package com.example.cse5236.mobilebuddy;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
@@ -132,5 +133,8 @@ public class MusicPlayerFragment extends Fragment{
             e.printStackTrace();
         }
         mediaPlayer.start();
+        Activity active = getActivity();
+        int currentBoredomStat = HomeScreenActivity.getStat(active, "boredom" );
+        HomeScreenActivity.setStat(active, "boredom", currentBoredomStat - 5);
     }
 }
