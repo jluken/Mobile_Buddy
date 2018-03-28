@@ -123,23 +123,7 @@ public class HomeScreenActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-//        Map<String, Integer> idMap = new HashMap<String, Integer>()
-//        {
-//            {
-//                put("hunger", R.id.textHunger);
-//                put("sleepiness", R.id.textSleepy);
-//                put("boredom", R.id.textBored);
-//                put("playfulness", R.id.textPlayful);
-//                put("sadness", R.id.textSad);
-//                put("loneliness", R.id.textLonely);
-//            }
-//        };
-//        Log.e("stat: ","mobilebuddy "+stat);
-//        Log.e("id: ","mobilebuddy "+idMap.get(stat));
-//        Log.e("view", "mobilebuddy "+ getView());
-//        TextView statDisplay = (TextView)getView().findViewById(idMap.get(stat));
-//        Log.e("textview: ","mobilebuddy "+statDisplay);
-//        statDisplay.setText(stat+": "+statVal);
+
 
         return statVal;
     }
