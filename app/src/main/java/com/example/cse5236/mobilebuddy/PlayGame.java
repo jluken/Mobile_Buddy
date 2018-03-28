@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
-
 import android.content.res.Resources;
 
 public class PlayGame extends AppCompatActivity {
@@ -18,6 +17,7 @@ public class PlayGame extends AppCompatActivity {
     public int score = 0;
     private ImageView buddy, battery1, battery2, battery3, leftButton, rightButton;
     private TextView scoreText;
+    private int leftEvent, rightEvent;
     private ArrayList<ImageView> batteryList = new ArrayList<ImageView>();
 
     @Override
@@ -27,11 +27,12 @@ public class PlayGame extends AppCompatActivity {
 
         leftButton = findViewById(R.id.leftButton);
         rightButton = findViewById(R.id.rightButton);
+        leftEvent = MotionEvent.ACTION_UP;
+        rightEvent = MotionEvent.ACTION_UP;
         leftButton.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event){
-                if (buddy.getX() > 0)
-                    buddy.setX(buddy.getX() - 5);
+                leftEvent = event.getAction();
                 return true;
             }
         });
@@ -39,8 +40,7 @@ public class PlayGame extends AppCompatActivity {
         rightButton.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event){
-                if (buddy.getX() < getScreenWidth())
-                    buddy.setX(buddy.getX() + 5);
+                rightEvent = event.getAction();
                 return true;
             }
         });
@@ -88,6 +88,12 @@ public class PlayGame extends AppCompatActivity {
         ApplyGravity();
         CheckCollisions();
 
+        if (buddy.getX() > 0 & (leftEvent == MotionEvent.ACTION_DOWN || leftEvent == MotionEvent.ACTION_MOVE))
+            buddy.setX(buddy.getX() - 6);
+
+        if (buddy.getX() < getScreenWidth() & (rightEvent == MotionEvent.ACTION_DOWN || rightEvent == MotionEvent.ACTION_MOVE))
+            buddy.setX(buddy.getX() + 6);
+
         scoreText.setText("Score: " + score);
     }
 
@@ -125,12 +131,5 @@ public class PlayGame extends AppCompatActivity {
     public void Respawn(ImageView battery){
         battery.setY(0);
         battery.setX(new Random().nextInt(getScreenWidth()));
-    }
-
-    private void setDimensions(View view, int width, int height){
-        android.view.ViewGroup.LayoutParams params = view.getLayoutParams();
-        params.width = width;
-        params.height = height;
-        view.setLayoutParams(params);
     }
 }
