@@ -36,7 +36,9 @@
         <activity
             android:name=".PlayGame"
             android:label="@string/title_activity_play_game"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".CollectFood"
             android:label="@string/title_activity_collect_food"
