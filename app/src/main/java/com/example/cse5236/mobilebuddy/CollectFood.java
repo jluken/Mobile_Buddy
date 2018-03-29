@@ -12,11 +12,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,6 +38,7 @@ public class CollectFood extends AppCompatActivity implements OnMapReadyCallback
     Marker foodMark;
     boolean foodMarkSet = false;
     LocationManager locationManager;
+    String locServ;
     double startLat;
     double startLong;
 
@@ -48,6 +52,7 @@ public class CollectFood extends AppCompatActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
         }
         locationManager = (LocationManager)getSystemService(this.LOCATION_SERVICE);
+        locServ = this.LOCATION_SERVICE;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collect_food);
@@ -71,7 +76,7 @@ public class CollectFood extends AppCompatActivity implements OnMapReadyCallback
         final GoogleMap mapObj = map;
         exploreButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setMark = true;
+
 
                 if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(active, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
@@ -79,14 +84,21 @@ public class CollectFood extends AppCompatActivity implements OnMapReadyCallback
                 if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(active, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_ACCESS_FINE_LOCATION);
                 }
+                //ActivityCompat.requestPermissions(active, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
+                //ActivityCompat.requestPermissions(active, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_ACCESS_FINE_LOCATION);
                 try{
+                    locationManager = (LocationManager)getSystemService(locServ);
+                    Looper looper = null;
+                    locationManager.requestSingleUpdate(locationManager.GPS_PROVIDER, locationListenerGPS, looper);
                     Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     startLong = location.getLongitude();
                     startLat = location.getLatitude();
                     startMark = mapObj.addMarker(new MarkerOptions().position(new LatLng(startLat, startLong)).title("Start"));
+                    setMark = true;
                     exploreText.setText("Walk 100m away and collect food");
                 }
                 catch (Exception e){
+                    Log.e("GPS Error", "mobilebuddy "+ e);
                     exploreText.setText("There was an error getting GPS location");
                 }
 
@@ -106,6 +118,9 @@ public class CollectFood extends AppCompatActivity implements OnMapReadyCallback
                 }
 
                 try{
+                    locationManager = (LocationManager)getSystemService(locServ);
+                    Looper looper = null;
+                    locationManager.requestSingleUpdate(locationManager.GPS_PROVIDER, locationListenerGPS, looper);
                     Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     double longitude = location.getLongitude();
                     double latitude = location.getLatitude();
@@ -130,6 +145,7 @@ public class CollectFood extends AppCompatActivity implements OnMapReadyCallback
                     }
                 }
                 catch (Exception e){
+                    Log.e("GPS Error", "mobilebuddy "+ e);
                     exploreText.setText("There was an error getting GPS location");
                 }
 
@@ -139,6 +155,29 @@ public class CollectFood extends AppCompatActivity implements OnMapReadyCallback
         });
 
     }
+    LocationListener locationListenerGPS = new LocationListener() {
+        @Override
+        public void onLocationChanged(android.location.Location location) {
+            double latitude=location.getLatitude();
+            double longitude=location.getLongitude();
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
 
     @Override
     public void onStart(){

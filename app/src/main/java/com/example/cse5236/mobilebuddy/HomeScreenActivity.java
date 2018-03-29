@@ -99,11 +99,11 @@ public class HomeScreenActivity extends AppCompatActivity{
         String filename = stat + ".dat";
         int statVal = 0;
         try{
-            Log.e("file: ","mobilebuddy "+filename);
+            //Log.e("file: ","mobilebuddy "+filename);
             FileInputStream in = active.openFileInput(filename);
             Scanner scanner = new Scanner(in);
             String data = scanner.nextLine();
-            Log.e("data: ","mobilebuddy " + data);
+            //Log.e("data: ","mobilebuddy " + data);
             statVal = Integer.parseInt(data);
             in.close();
             scanner.close();
