@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     android:orientation="vertical"
     tools:context="com.example.cse5236.mobilebuddy.Music">
@@ -10,7 +10,8 @@
     <ListView
         android:id="@+id/song_list"
         android:layout_width="fill_parent"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         style="@style/Base.TextAppearance.AppCompat.Title"
         android:descendantFocusability="blocksDescendants"
         android:focusable="true"
@@ -21,25 +22,28 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_weight="0"
         android:gravity="center">
-        <Button
+        <ImageView
             android:id="@+id/playButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="44dp"
             android:layout_gravity="center"
-            android:text="Play" />
-        <Button
-            android:id="@+id/pauseButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Pause" />
-        <Button
+            android:paddingBottom="4dp"
+            android:src="@drawable/playbutton" />
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="0dp" />
+
+
+        <ImageView
             android:id="@+id/skipButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
+            android:paddingBottom="2dp"
             android:layout_gravity="center"
-            android:text="Skip" />
+            android:src="@drawable/skipbutton" />
     </LinearLayout>
 
 </LinearLayout>

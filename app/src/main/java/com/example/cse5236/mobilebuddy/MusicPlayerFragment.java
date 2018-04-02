@@ -1,12 +1,10 @@
 package com.example.cse5236.mobilebuddy;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,7 +14,7 @@ import android.os.Bundle;
 import android.database.Cursor;
 import android.content.ContentResolver;
 import android.content.ContentUris;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.io.IOException;
@@ -29,10 +27,13 @@ import java.util.ArrayList;
 public class MusicPlayerFragment extends Fragment{
 
     private MediaPlayer mediaPlayer;
+    private MediaPlayerHolder holder;
     private Uri musicUri;
     private ArrayList<SongInfoObj> songList;
     private SongListAdapter slAdapter;
     private int currentPos;
+    private boolean started;
+    private ImageView playPauseButton, skipButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,8 +49,10 @@ public class MusicPlayerFragment extends Fragment{
         getSongList();
 
         slAdapter = new SongListAdapter(getActivity(), songList);
-        mediaPlayer = new MediaPlayer();
+        holder = (MediaPlayerHolder) getArguments().getSerializable("player");
+        mediaPlayer = holder.mediaPlayer;
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        started = false;
 
         final ListView songView = getView().findViewById(R.id.song_list);
         songView.setAdapter(slAdapter);
@@ -59,35 +62,35 @@ public class MusicPlayerFragment extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 currentPos = position;
                 playSong();
+                playPauseButton.setImageResource(R.drawable.pausebutton);
             }
         });
 
-        final Button playButton = getView().findViewById(R.id.playButton);
-        playButton.setOnClickListener(new View.OnClickListener() {
+        playPauseButton = getView().findViewById(R.id.playButton);
+        playPauseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (!mediaPlayer.isPlaying()){
-                    mediaPlayer.start();
-                }
-            }
-        });
-
-        final Button pauseButton = getView().findViewById(R.id.pauseButton);
-        pauseButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (mediaPlayer.isPlaying()){
+                    if (started) {
+                        mediaPlayer.start();
+                        playPauseButton.setImageResource(R.drawable.pausebutton);
+                    }
+                }else {
                     mediaPlayer.pause();
+                    playPauseButton.setImageResource(R.drawable.playbutton);
                 }
             }
         });
 
-        final Button skipButton = getView().findViewById(R.id.skipButton);
+        skipButton = getView().findViewById(R.id.skipButton);
         skipButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (currentPos == songList.size() - 1)
-                    currentPos = 0;
-                else
-                    currentPos += 1;
-                playSong();
+                if (started) {
+                    if (currentPos == songList.size() - 1)
+                        currentPos = 0;
+                    else
+                        currentPos += 1;
+                    playSong();
+                }
             }
         });
     }
@@ -120,6 +123,7 @@ public class MusicPlayerFragment extends Fragment{
 
     public void playSong(){
         mediaPlayer.reset();
+        started = true;
         musicUri = ContentUris.withAppendedId(
                 android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, songList.get(currentPos).getID());
         try {

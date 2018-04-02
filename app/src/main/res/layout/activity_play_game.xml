@@ -1,86 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game_container"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:id="@+id/frameMain"
-    tools:context="com.example.cse5236.mobilebuddy.PlayGame">
-
-
-    <ImageView
-        android:id="@+id/background"
-        android:src="@drawable/background"
-        android:scaleType = "centerCrop"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:focusableInTouchMode="false"
-        android:clickable="false"
-        android:focusable="false"/>
-
-    <ImageView
-        android:id="@+id/leftButton"
-        android:src="@drawable/leftarrow"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:alpha="0.75"
-        android:layout_gravity="start|center"/>
-
-    <ImageView
-        android:id="@+id/rightButton"
-        android:src="@drawable/rightarrow"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:alpha="0.75"
-        android:layout_gravity="end|center"/>
-
-    <RelativeLayout
-        android:id="@+id/relLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/buddy"
-            android:src="@drawable/buddysprite"
-            android:layout_height="64dp"
-            android:layout_width="64dp"/>
-
-        <ImageView
-            android:id="@+id/battery1"
-            android:src="@drawable/battery"
-            android:layout_height="32dp"
-            android:layout_width="32dp"/>
-
-        <ImageView
-            android:id="@+id/battery2"
-            android:src="@drawable/battery"
-            android:layout_height="32dp"
-            android:layout_width="32dp"/>
-
-        <ImageView
-            android:id="@+id/battery3"
-            android:src="@drawable/battery"
-            android:layout_height="32dp"
-            android:layout_width="32dp"/>
-    </RelativeLayout>
-
-    <TextView
-        android:text="Score: "
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:id="@+id/scoreText"
-        android:layout_width="128dp"
-        android:layout_height="32dp"
-        android:layout_gravity="top"/>
-
-    <TextView
-        android:text="Collect the Batteries!"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:id="@+id/infoText"
-        android:layout_width="188dp"
-        android:layout_height="32dp"
-        android:layout_gravity="top|center"/>
-
-</FrameLayout>
+    android:configChanges="orientation|screenSize|keyboardHidden"
+    tools:context="com.example.cse5236.mobilebuddy.PlayGame" />

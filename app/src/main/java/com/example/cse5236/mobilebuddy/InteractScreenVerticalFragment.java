@@ -27,6 +27,7 @@ public class InteractScreenVerticalFragment extends Fragment {
         return view;
     }
 
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
 
         bundle = this.getArguments();

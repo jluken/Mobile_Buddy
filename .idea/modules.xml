@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MobileBuddy.iml" filepath="$PROJECT_DIR$/MobileBuddy.iml" />
+      <module fileurl="file://E:\Amir\Documents\GitHub\Mobile_Buddy\MobileBuddy.iml" filepath="E:\Amir\Documents\GitHub\Mobile_Buddy\MobileBuddy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Mobile_Buddy.iml" filepath="$PROJECT_DIR$/Mobile_Buddy.iml" />
       <module fileurl="file://C:\Users\Jackson\Documents\Android\MobileBuddy\Mobile_Buddy.iml" filepath="C:\Users\Jackson\Documents\Android\MobileBuddy\Mobile_Buddy.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
