@@ -3,6 +3,7 @@ package com.example.cse5236.mobilebuddy;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class HomeScreenActivity extends AppCompatActivity{
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,7 +35,11 @@ public class HomeScreenActivity extends AppCompatActivity{
         Log.wtf("buddy", "onCreate");
         Log.d("Checkpoint3", "HomeScreenActivity: On Create Triggered");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_screen_activity);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            setContentView(R.layout.home_screen_activity_horiz);
+        else
+            setContentView(R.layout.home_screen_activity);
+
         final Intent beginIntent = new Intent(this, InteractScreenActivity.class);
 
         final Button clickMeButton = findViewById(R.id.clickMeButton);
@@ -53,7 +58,7 @@ public class HomeScreenActivity extends AppCompatActivity{
 
         int minute = 30;
         //increase stats every minute minutes
-        final Handler handler = new Handler();
+        handler = new Handler();
         //final int delay = 1000*60*minute; //milliseconds
         final int delay = 1000*10; //10 second update for demo
         final Activity active = this;
@@ -74,12 +79,19 @@ public class HomeScreenActivity extends AppCompatActivity{
                 setStat(active,"sadness", sadness + 1);
                 setStat(active,"loneliness", loneliness + 1);
 
+                Log.e("homescreen", "mobilebuddy: about to update");
                 graphFragment.updateGraph();
                 buddyFragment.updateBuddy();
 
                 handler.postDelayed(this, delay);
             }
         }, delay);
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
     }
 
     @Override

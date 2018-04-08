@@ -109,7 +109,9 @@ public class GraphFragment extends Fragment {
 //    }
 
     public void updateGraph(){
+        Log.e("update graph", "mobilebuddy: start");
         HorizontalBarChart barChart = (HorizontalBarChart) getView().findViewById(R.id.barchart);
+        Log.e("update graph", "mobilebuddy: barchart: " + barChart.toString());
         ArrayList<String> emotions = new ArrayList<String>();
         emotions.add("Hunger");
         emotions.add("Sleepiness");

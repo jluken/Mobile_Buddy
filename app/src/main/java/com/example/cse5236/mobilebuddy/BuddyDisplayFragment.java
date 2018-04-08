@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ public class BuddyDisplayFragment extends Fragment {
     }
 
     public void updateBuddy(){
+        Log.e("update buddy", "mobilebuddy: start");
         ImageView mImageView;
         mImageView = (ImageView) (ImageView)getView().findViewById(R.id.buddyImage);
         Activity active = getActivity();
@@ -77,7 +79,7 @@ public class BuddyDisplayFragment extends Fragment {
         int worstEmotion = -1;
         int biggest = 0;
         for (int i = 0; i < emotions.length; i++){
-            if (emotions[i] > biggest){
+            if (emotions[i] >= biggest){
                 biggest = emotions[i];
                 worstEmotion = i;
             }

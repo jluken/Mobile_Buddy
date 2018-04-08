@@ -11,12 +11,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,7 +28,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.gms.location.LocationServices;
 
-public class CollectFood extends AppCompatActivity implements OnMapReadyCallback {
+public class CollectFood extends FragmentActivity implements OnMapReadyCallback {
+
 
     private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
     private final int MY_PERMISSION_ACCESS_FINE_LOCATION = 1;
@@ -55,7 +59,11 @@ public class CollectFood extends AppCompatActivity implements OnMapReadyCallback
         locServ = this.LOCATION_SERVICE;
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collect_food);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            setContentView(R.layout.activity_collect_food_horiz);
+        else
+            setContentView(R.layout.activity_collect_food);
+
 
         exploreButton = findViewById(R.id.ExploreButton);
         foodButton = findViewById(R.id.FoodButton);

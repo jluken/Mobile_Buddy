@@ -2,6 +2,7 @@ package com.example.cse5236.mobilebuddy;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,7 +27,11 @@ public class Draw extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.e("checkpoint", "mobilebuddy draw create");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_draw);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            setContentView(R.layout.activity_draw_horiz);
+        else
+            setContentView(R.layout.activity_draw);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

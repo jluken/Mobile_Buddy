@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.cse5236.mobilebuddy.CollectFood"
+    tools:showIn="@layout/activity_collect_food_horiz">
+
+    <TextView
+        android:id="@+id/ExploreText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:textSize="18dp"
+        android:text="Click button to go out and find food!" />
+
+    <Button
+        android:id="@+id/ExploreButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ExploreText"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/ExploreText"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Start Exploring"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="479dp" />
+
+    <Button
+        android:id="@+id/FoodButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ExploreButton"
+        android:layout_below="@+id/ExploreText"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="16dp"
+        android:text="Collect Food" />
+
+
+
+
+
+</RelativeLayout>
