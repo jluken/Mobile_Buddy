@@ -17,10 +17,9 @@ public class MusicTest {
     @Test
     public void testMusicOnCreateInitializesObjects()
     {
-//        musicActivityTestRule.getActivity().onCreate(Bundle.EMPTY);
 
+        //Create activity and test that the lifecycle method has successfully run
         Music myActivity = (Music) musicActivityTestRule.getActivity();
-        //myActivity.onCreate(Bundle.EMPTY);
         Assert.assertTrue(myActivity.mediaPlayer != null);
         Assert.assertTrue(myActivity.bundle.containsKey("player"));
 
