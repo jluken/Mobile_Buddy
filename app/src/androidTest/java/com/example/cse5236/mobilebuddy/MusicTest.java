@@ -1,6 +1,7 @@
 package com.example.cse5236.mobilebuddy;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.test.rule.ActivityTestRule;
 
@@ -16,11 +17,14 @@ public class MusicTest {
     @Test
     public void testMusicOnCreateInitializesObjects()
     {
-        musicActivityTestRule.getActivity().onCreate(Bundle.EMPTY);
+//        musicActivityTestRule.getActivity().onCreate(Bundle.EMPTY);
 
-
-        Assert.assertTrue(musicActivityTestRule.getActivity().mediaPlayer != null);
-        Assert.assertTrue(musicActivityTestRule.getActivity().bundle.containsKey("player"));
+        Music myActivity = (Music) musicActivityTestRule.getActivity();
+        //myActivity.onCreate(Bundle.EMPTY);
+        Assert.assertTrue(myActivity.mediaPlayer != null);
+        Assert.assertTrue(myActivity.bundle.containsKey("player"));
 
     }
+
+
 }
