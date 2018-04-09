@@ -1,6 +1,7 @@
 package com.example.cse5236.mobilebuddy;
 
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.app.AlertDialog;
 
@@ -37,7 +38,12 @@ public class Sleep extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sleep);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            setContentView(R.layout.activity_sleep_horiz);
+        else
+            setContentView(R.layout.activity_sleep);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -45,25 +51,8 @@ public class Sleep extends AppCompatActivity {
 
         isSleeping = false;
         currentCurfewDisplay = findViewById(R.id.currentCurfewDisplay);
-
-        if (savedInstanceState != null)
-        {
-            curfew = new Time(savedInstanceState.getLong("CURFEW"));
-        }
-
-        if (curfew != null)
-        {
-            currentCurfewDisplay.setText("Current Curfew:" + curfew.toString());
-
-        }
-        else
-        {
-            currentCurfewDisplay.setText("No current curfew set!");
-        }
-
-
         curfewSetter = findViewById(R.id.curfewSetter);
-        curfewSetter.setEnabled(false);
+
 
         startSleeping = findViewById(R.id.startSleeping);
         startSleeping.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +60,6 @@ public class Sleep extends AppCompatActivity {
             public void onClick(View v) {
 
         Date currentTime = Calendar.getInstance().getTime();
-
 
                 if (helper.CheckCurrentTimeBeforeCurfew(curfew, currentTime  ))
                 {
@@ -114,7 +102,24 @@ public class Sleep extends AppCompatActivity {
         });
 
 
+        if (savedInstanceState != null) {
+            curfew = new Time(savedInstanceState.getLong("CURFEW"));
+            startSleeping.setEnabled(true);
 
+
+            curfew = new Time(curfewSetter.getCurrentHour(), curfewSetter.getCurrentMinute(), 0);
+            setNewCurfew.setText("Set new curfew after you sleep!");
+            curfewSetter.setEnabled(false);
+            setNewCurfew.setEnabled(false);
+
+            currentCurfewDisplay.setText("Current Curfew:" + curfew.toString());
+            setNewCurfew.setTag(1); //pause        }
+        }
+        else
+        {
+            curfewSetter.setEnabled(false);
+            currentCurfewDisplay.setText("No current curfew set!");
+        }
 
 
 
@@ -236,8 +241,10 @@ public class Sleep extends AppCompatActivity {
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
         // Save the user's current game state
-        savedInstanceState.putLong("CURFEW", curfew.getTime());
-        savedInstanceState.putString("KEY", "Test");
+        if(curfew != null) {
+            savedInstanceState.putLong("CURFEW", curfew.getTime());
+            savedInstanceState.putString("KEY", "Test");
+        }
     }
 
 

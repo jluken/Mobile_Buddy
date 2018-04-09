@@ -3,6 +3,7 @@ package com.example.cse5236.mobilebuddy;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,6 +18,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.sql.Time;
 
 public class GoForWalk extends AppCompatActivity implements SensorEventListener, StepListener {
 
@@ -37,7 +40,11 @@ public class GoForWalk extends AppCompatActivity implements SensorEventListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_go_for_walk);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            setContentView(R.layout.activity_go_for_walk_horiz);
+        else
+            setContentView(R.layout.activity_go_for_walk);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -55,7 +62,8 @@ public class GoForWalk extends AppCompatActivity implements SensorEventListener,
         BtnStop = (Button) findViewById(R.id.btn_stop);
 
         BtnStop.setEnabled(false);
-        TvSteps.setText("Steps taken: " + numSteps);
+
+
 
         BtnStart.setOnClickListener(new View.OnClickListener() {
 
@@ -77,7 +85,7 @@ public class GoForWalk extends AppCompatActivity implements SensorEventListener,
 
                 BtnStop.setEnabled(false);
                 BtnStart.setEnabled(true);
-                MakeAlertRestartingFromSleep();
+                MakeAlertAfterFinishingWalk();
                 sensorManager.unregisterListener(GoForWalk.this);
 
                 //Add this count to the stats
@@ -90,11 +98,26 @@ public class GoForWalk extends AppCompatActivity implements SensorEventListener,
 
             }
         });
+
+
+        if (savedInstanceState != null)
+        {
+            numSteps = savedInstanceState.getInt("STEPS");
+            //User is on a walk, set buttons appropriately
+            if (numSteps > 0)
+            {
+                BtnStart.setEnabled(false);
+                BtnStop.setEnabled(true);
+            }
+        }
+
+        TvSteps.setText("Steps taken: " + numSteps);
+
     }
 
 
 
-    private void  MakeAlertRestartingFromSleep()
+    private void  MakeAlertAfterFinishingWalk()
     {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage("Nice job! Your pet walked for " + numSteps + " steps with you!");
@@ -129,6 +152,17 @@ public class GoForWalk extends AppCompatActivity implements SensorEventListener,
     public void step(long timeNs) {
         numSteps++;
         TvSteps.setText(TEXT_NUM_STEPS + numSteps);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+        // Save the user's current game state
+        savedInstanceState.putInt("STEPS", numSteps);
+
     }
 
 
