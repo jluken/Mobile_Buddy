@@ -32,6 +32,7 @@ public class Sleep extends AppCompatActivity {
     TimePicker curfewSetter;
     Time curfew;
     Date sleepStarted;
+    SleepScheduleHelper helper = new SleepScheduleHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +70,10 @@ public class Sleep extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+        Date currentTime = Calendar.getInstance().getTime();
 
 
-                if (CheckCurrentTimeBeforeCurfew())
+                if (helper.CheckCurrentTimeBeforeCurfew(curfew, currentTime  ))
                 {
                     isSleeping = true;
                     MakeAlertSuccessfulSleepAttempt();
@@ -176,22 +178,6 @@ public class Sleep extends AppCompatActivity {
         alert.show();
     }
 
-    private boolean CheckCurrentTimeBeforeCurfew()
-    {
-
-        boolean timeIsBeforeCurfew = false;
-        Date currentTime = Calendar.getInstance().getTime();
-        int minutesCurrentTime = currentTime.getHours() * 60 + currentTime.getMinutes();
-        int minutesForCurfew = curfew.getHours() * 60 + curfew.getMinutes();
-
-        if (minutesCurrentTime < minutesForCurfew)
-        {
-            timeIsBeforeCurfew = true;
-        }
-
-        return timeIsBeforeCurfew;
-
-    }
 
     private boolean IsScreenOn()
     {
@@ -200,37 +186,7 @@ public class Sleep extends AppCompatActivity {
         return result;
     }
 
-    private int[] CalculateTimeDifference(Date startTime)
-    {
 
-        Date endTime = Calendar.getInstance().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/M/yyyy hh:mm:ss");
-
-        long difference = endTime.getTime() - startTime.getTime();
-        if(difference<0)
-        {
-            try
-            {
-                Date dateMax = simpleDateFormat.parse("24:00");
-                Date dateMin = simpleDateFormat.parse("00:00");
-                difference=(dateMax.getTime() -startTime.getTime() )+(endTime.getTime()-dateMin.getTime());
-
-            }
-            catch (Exception e)
-            {
-                Log.d("sleeptimecalculation", "CalculateTimeDifference: Exception occurred");
-            }
-
-        }
-        int hours = (int) ((difference / (1000*60*60)));
-        int min = (int) (difference - (1000*60*60*hours)) / (1000*60);
-
-        int[] retVal = new int[2];
-        retVal[0] = hours;
-        retVal[1] = min;
-
-        return retVal;
-    }
 
      @Override
     protected void onStop()
@@ -259,13 +215,14 @@ public class Sleep extends AppCompatActivity {
         {
             //Allow user to change curfew now if they want
             setNewCurfew.setEnabled(true);
+            Date endTime = Calendar.getInstance().getTime();
 
-            int[] hoursAndMinutes = CalculateTimeDifference(sleepStarted);
+            int[] hoursAndMinutes = helper.CalculateTimeDifference(sleepStarted, endTime );
             MakeAlertRestartingFromSleep(hoursAndMinutes[0], hoursAndMinutes[1]);
 
             //Add this count to the stats
             int currentSleepStat = HomeScreenActivity.getStat(this, "sleepiness" );
-            HomeScreenActivity.setStat(this, "sleepiness", currentSleepStat + 5);
+            HomeScreenActivity.setStat(this, "sleepiness", currentSleepStat - hoursAndMinutes[0]);
 
             isSleeping = false;
         }
