@@ -10,9 +10,7 @@ public class Music extends AppCompatActivity {
 
     private FragmentTransaction transaction;
     private MusicPlayerFragment mpFragment;
-    public MediaPlayer mediaPlayer;
-    public MediaPlayerHolder holder;
-    public Bundle bundle;
+    public static MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +20,7 @@ public class Music extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mediaPlayer = new MediaPlayer();
-        holder = new MediaPlayerHolder(mediaPlayer);
-        bundle = new Bundle();
-        bundle.putSerializable("player", holder);
         mpFragment = new MusicPlayerFragment();
-        mpFragment.setArguments(bundle);
 
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.music_container, mpFragment).commit();

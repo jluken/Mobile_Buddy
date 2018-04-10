@@ -27,13 +27,13 @@ import java.util.ArrayList;
 public class MusicPlayerFragment extends Fragment{
 
     private MediaPlayer mediaPlayer;
-    private MediaPlayerHolder holder;
     private Uri musicUri;
     private ArrayList<SongInfoObj> songList;
     private SongListAdapter slAdapter;
     private int currentPos;
     private boolean started;
     private ImageView playPauseButton, skipButton;
+    private ListView songView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,13 +48,13 @@ public class MusicPlayerFragment extends Fragment{
         songList = new ArrayList<SongInfoObj>();
         getSongList();
 
+
         slAdapter = new SongListAdapter(getActivity(), songList);
-        holder = (MediaPlayerHolder) getArguments().getSerializable("player");
-        mediaPlayer = holder.mediaPlayer;
+        mediaPlayer = Music.mediaPlayer;
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         started = false;
 
-        final ListView songView = getView().findViewById(R.id.song_list);
+        songView = getView().findViewById(R.id.song_list);
         songView.setAdapter(slAdapter);
 
         songView.setOnItemClickListener(new OnItemClickListener() {
@@ -90,6 +90,7 @@ public class MusicPlayerFragment extends Fragment{
                     else
                         currentPos += 1;
                     playSong();
+                    playPauseButton.setImageResource(R.drawable.pausebutton);
                 }
             }
         });
