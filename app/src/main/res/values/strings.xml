@@ -6,7 +6,10 @@
     <string name="title_activity_go_for_walk">GoForWalk</string>
     <string name="title_activity_music">Music</string>
     <string name="title_activity_sleep">Sleep</string>
-
+    <string name="activity_dialog_title">Forgot you Pincode?</string>
+    <string name="activity_dialog_accept">OK</string>
+    <string name="activity_dialog_decline">CANCEL</string>
+    <string name="activity_dialog_content">Tap \'OK\' to delete your pin code and you can only reset it if you remember it, tap \'Cancel\' to go back and try again.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_curfew">CurfewActivity</string>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,10 @@ import android.view.View;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+
+import com.github.orangegangsters.lollipin.lib.PinActivity;
+import com.github.orangegangsters.lollipin.lib.PinCompatActivity;
+import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,15 +28,23 @@ import java.util.logging.Logger;
  * Created by krishnaganesan on 2/22/18.
  */
 
-public class HomeScreenActivity extends AppCompatActivity{
+public class HomeScreenActivity extends PinCompatActivity {
+
+
+
+
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
     Handler handler;
+    HandlerThread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
+
+
         Log.wtf("buddy", "onCreate");
         Log.d("Checkpoint3", "HomeScreenActivity: On Create Triggered");
         super.onCreate(savedInstanceState);
@@ -41,6 +54,8 @@ public class HomeScreenActivity extends AppCompatActivity{
             setContentView(R.layout.home_screen_activity);
 
         final Intent beginIntent = new Intent(this, InteractScreenActivity.class);
+        final Intent lockSettingsIntent = new Intent(this, LockSettingsActivity.class);
+
 
         final Button clickMeButton = findViewById(R.id.clickMeButton);
         clickMeButton.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +63,15 @@ public class HomeScreenActivity extends AppCompatActivity{
                 startActivity(beginIntent);
             }
         });
+
+        final Button lockSettingsButton = findViewById(R.id.lockSettingsButton);
+        lockSettingsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(lockSettingsIntent);
+            }
+        });
+
+
 
         final BuddyDisplayFragment buddyFragment = new BuddyDisplayFragment();
         fragmentTransaction.add(R.id.pet_container, buddyFragment);
@@ -58,7 +82,9 @@ public class HomeScreenActivity extends AppCompatActivity{
 
         int minute = 30;
         //increase stats every minute minutes
-        handler = new Handler();
+        thread = new HandlerThread("HomeScreenStatThread");
+        thread.start();
+        handler = new Handler(thread.getLooper());
         //final int delay = 1000*60*minute; //milliseconds
         final int delay = 1000*10; //10 second update for demo
         final Activity active = this;
@@ -92,6 +118,7 @@ public class HomeScreenActivity extends AppCompatActivity{
     protected void onDestroy(){
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
+        thread.stop();
     }
 
     @Override

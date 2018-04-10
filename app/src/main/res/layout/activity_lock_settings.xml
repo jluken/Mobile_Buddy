@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cse5236.mobilebuddy.LockSettingsActivity">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/enableLock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enable Lock"/>
+
+        <Button
+            android:id="@+id/disableLock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disable Lock"/>
+
+        <Button
+            android:id="@+id/editLock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Lock"/>
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>

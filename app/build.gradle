@@ -23,6 +23,10 @@ android {
 repositories {
     maven { url "https://jitpack.io" }
     maven { url "https://maven.google.com" }
+    maven { url "https://github.com/omadahealth/omada-nexus/raw/master/release" }
+    jcenter()
+
+
 }
 
 dependencies {
@@ -37,4 +41,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     compile 'com.google.android.gms:play-services-location:12.0.0'
+    compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
+
+    //Lollipin
+    compile('com.github.orangegangsters:lollipin:2.0.0@aar') {
+        transitive = true
+    }
 }
