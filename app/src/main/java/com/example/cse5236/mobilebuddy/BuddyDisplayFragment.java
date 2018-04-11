@@ -85,7 +85,10 @@ public class BuddyDisplayFragment extends Fragment {
             }
         }
         if (biggest > 80){
-            if(worstEmotion == 1){
+            if(worstEmotion == 0){
+                mImageView.setImageResource(R.drawable.buddyhungry);
+            }
+            else if(worstEmotion == 1){
                 mImageView.setImageResource(R.drawable.buddysleepy);
             }
             else if(worstEmotion == 2){

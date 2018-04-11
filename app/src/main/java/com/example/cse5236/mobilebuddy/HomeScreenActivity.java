@@ -106,8 +106,15 @@ public class HomeScreenActivity extends PinCompatActivity {
                 setStat(active,"loneliness", loneliness + 1);
 
                 Log.e("homescreen", "mobilebuddy: about to update");
-                graphFragment.updateGraph();
-                buddyFragment.updateBuddy();
+                runOnUiThread(new Runnable(){
+
+                    @Override
+                    public void run(){
+                        graphFragment.updateGraph();
+                        buddyFragment.updateBuddy();
+                    }
+                });
+
 
                 handler.postDelayed(this, delay);
             }
@@ -118,7 +125,7 @@ public class HomeScreenActivity extends PinCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
-        thread.stop();
+        thread.quit();
     }
 
     @Override

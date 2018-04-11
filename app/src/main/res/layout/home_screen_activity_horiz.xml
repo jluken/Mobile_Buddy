@@ -28,9 +28,18 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:text="Interact"
-        android:layout_centerHorizontal="true"
+        android:layout_alignRight="@+id/middle"
         android:layout_below="@+id/welcomeText"
         />
+
+    <Button
+        android:id="@+id/lockSettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignLeft="@+id/middle"
+        android:layout_below="@+id/welcomeText"
+        android:text="Lock Settings"/>
 
     <FrameLayout
         android:id="@+id/pet_container"
