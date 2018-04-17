@@ -60,9 +60,9 @@ public class InteractScreenActivity extends FragmentActivity{
         transaction = getSupportFragmentManager().beginTransaction();
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            transaction.replace(R.id.interact_container, horiFrag).commit();
+            transaction.replace(R.id.interact_container, horiFrag).commitAllowingStateLoss();
         else
-            transaction.replace(R.id.interact_container, vertFrag).commit();
+            transaction.replace(R.id.interact_container, vertFrag).commitAllowingStateLoss();
     }
 
     @Override

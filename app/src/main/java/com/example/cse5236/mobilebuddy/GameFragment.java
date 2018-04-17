@@ -26,6 +26,7 @@ public class GameFragment extends android.support.v4.app.Fragment {
     private TextView scoreText;
     private int leftEvent, rightEvent;
     private ArrayList<ImageView> batteryList = new ArrayList<ImageView>();
+    private Thread t;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,21 +74,25 @@ public class GameFragment extends android.support.v4.app.Fragment {
 
         scoreText = getView().findViewById(R.id.scoreText);
 
-        Thread t = new Thread(){
+        t = new Thread(){
             @Override
             public void run() {
-                try {
-                    while (!isInterrupted()) {
+                while (!isInterrupted()) {
+                    try {
                         Thread.sleep(10);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Update();
-                            }
-                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+
+                    if (getActivity() == null)
+                        return;
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Update();
+                        }
+                    });
                 }
             }
         };
@@ -119,9 +124,11 @@ public class GameFragment extends android.support.v4.app.Fragment {
             if (buddyRect.intersect(batRect)){
                 score += 100;
                 Respawn(batteryList.get(i));
-                Activity active = getActivity();
-                int currentPlayfulnessStat = HomeScreenActivity.getStat(active, "playfulness" );
-                HomeScreenActivity.setStat(active, "playfulness", currentPlayfulnessStat - 5);
+                if (getActivity() != null) {
+                    Activity active = getActivity();
+                    int currentPlayfulnessStat = HomeScreenActivity.getStat(active, "playfulness");
+                    HomeScreenActivity.setStat(active, "playfulness", currentPlayfulnessStat - 5);
+                }
             }
             if (batteryList.get(i).getY() > getScreenHeight())
                 Respawn(batteryList.get(i));

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.ImageView;
 
 /**
  * Created by Amir on 2/23/2018.
@@ -33,15 +34,15 @@ public class InteractScreenVerticalFragment extends Fragment {
         bundle = this.getArguments();
         final String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
 
-        final Button playGameButton = getView().findViewById(R.id.playGameButton);
-        playGameButton.setOnClickListener(new View.OnClickListener() {
+        final ImageView gameIcon = getView().findViewById(R.id.gameIcon);
+        gameIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity((Intent)bundle.getParcelable("game"));
             }
         });
 
-        final Button playMusicButton = getView().findViewById(R.id.playMusicButton);
-        playMusicButton.setOnClickListener(new View.OnClickListener() {
+        final ImageView musicIcon = getView().findViewById(R.id.musicIcon);
+        musicIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (getContext().checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_DENIED)
                     ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, 1);
@@ -51,29 +52,29 @@ public class InteractScreenVerticalFragment extends Fragment {
             }
         });
 
-        final Button collectFoodButton = getView().findViewById(R.id.collectFoodButton);
-        collectFoodButton.setOnClickListener(new View.OnClickListener() {
+        final ImageView foodIcon = getView().findViewById(R.id.foodIcon);
+        foodIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity((Intent)bundle.getParcelable("food"));
             }
         });
 
-        final Button drawButton = getView().findViewById(R.id.drawButton);
-        drawButton.setOnClickListener(new View.OnClickListener() {
+        final ImageView drawIcon = getView().findViewById(R.id.drawIcon);
+        drawIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity((Intent)bundle.getParcelable("draw"));
             }
         });
 
-        final Button walkButton = getView().findViewById(R.id.walkButton);
-        walkButton.setOnClickListener(new View.OnClickListener() {
+        final ImageView walkIcon = getView().findViewById(R.id.walkIcon);
+        walkIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity((Intent)bundle.getParcelable("walk"));
             }
         });
 
-        final Button sleepButton = getView().findViewById(R.id.sleepButton);
-        sleepButton.setOnClickListener(new View.OnClickListener() {
+        final ImageView sleepIcon = getView().findViewById(R.id.sleepIcon);
+        sleepIcon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity((Intent)bundle.getParcelable("sleep"));
             }
